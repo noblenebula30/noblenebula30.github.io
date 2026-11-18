@@ -1,0 +1,1157 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>U蓝 - 蓝调影像品牌 - 以光影记录每一种蓝</title>
+<meta name="description" content="U蓝官方网站，专注蓝调影像与城市夜色的视频品牌，汇聚原创创作者，构建高品质内容生态。">
+<style>
+  :root{
+    --blue-900:#0b1c3a;
+    --blue-700:#123a6b;
+    --blue-500:#1f6feb;
+    --blue-300:#6fb3ff;
+    --blue-050:#eef5ff;
+    --cyan-glow:#39d0ff;
+    --ink:#101828;
+    --muted:#5b6b82;
+    --line:#dbe6f5;
+    --white:#ffffff;
+    --radius:16px;
+    --shadow:0 12px 32px rgba(17,58,107,.10);
+    --shadow-hover:0 20px 44px rgba(17,58,107,.18);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",system-ui,sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 500px at 90% -10%, #dceafc 0%, transparent 60%),
+      radial-gradient(900px 420px at -10% 10%, #e6f4ff 0%, transparent 55%),
+      #f8fbff;
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  ul{padding-left:1.2em;}
+
+  /* ===== 吸顶容器：公告 + 页头 ===== */
+  .sticky-shell{
+    position:sticky;
+    top:0;
+    z-index:120;
+    backdrop-filter:blur(10px);
+  }
+  .announce{
+    background:linear-gradient(90deg,var(--blue-900),var(--blue-700) 55%,var(--blue-500));
+    color:#eaf4ff;
+    font-size:13px;
+    letter-spacing:.02em;
+  }
+  .announce .wrap{
+    display:flex;align-items:center;gap:12px;
+    padding:9px 0;overflow:hidden;
+  }
+  .announce-tag{
+    flex:none;background:var(--cyan-glow);color:#06203c;
+    font-weight:700;font-size:12px;padding:2px 10px;border-radius:999px;
+    letter-spacing:.05em;
+  }
+  .announce-track{
+    display:flex;gap:38px;white-space:nowrap;
+    animation:slide 26s linear infinite;
+  }
+  .announce-track:hover{animation-play-state:paused;}
+  @keyframes slide{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+  .announce-track span{opacity:.92;}
+  .announce-track b{color:#b9e4ff;font-weight:600;}
+
+  header.site{
+    background:rgba(255,255,255,.86);
+    border-bottom:1px solid var(--line);
+  }
+  .wrap{
+    width:min(1180px,92vw);
+    margin-inline:auto;
+  }
+  .nav-bar{
+    display:flex;align-items:center;gap:22px;
+    padding:14px 0;
+  }
+  .logo{
+    display:flex;align-items:center;gap:10px;
+    font-weight:800;font-size:20px;letter-spacing:.02em;
+    color:var(--blue-900);
+  }
+  .logo-mark{
+    width:36px;height:36px;border-radius:11px;
+    background:linear-gradient(140deg,var(--blue-500),var(--cyan-glow));
+    display:grid;place-items:center;color:#fff;font-size:16px;
+    box-shadow:0 6px 16px rgba(31,111,235,.35);
+  }
+  .logo small{
+    display:block;font-size:11px;font-weight:500;color:var(--muted);letter-spacing:.14em;
+  }
+  nav.main{display:flex;gap:4px;margin-left:8px;flex-wrap:wrap;}
+  nav.main a{
+    padding:8px 12px;border-radius:10px;font-size:14.5px;color:#28384f;
+    transition:.2s;
+  }
+  nav.main a:hover{background:var(--blue-050);color:var(--blue-700);}
+  .search-box{
+    margin-left:auto;position:relative;
+    display:flex;align-items:center;
+    background:var(--blue-050);
+    border:1px solid #cfe0f6;
+    border-radius:999px;
+    padding:4px 4px 4px 14px;
+    min-width:230px;
+  }
+  .search-box input{
+    border:0;outline:0;background:transparent;font-size:14px;
+    width:100%;color:var(--ink);font-family:inherit;
+  }
+  .search-box button{
+    border:0;cursor:pointer;border-radius:999px;
+    background:var(--blue-500);color:#fff;font-size:13px;
+    padding:6px 14px;font-family:inherit;transition:.2s;
+  }
+  .search-box button:hover{background:var(--blue-700);}
+  .search-hint{
+    position:absolute;top:calc(100% + 8px);left:0;right:0;
+    background:#fff;border:1px solid var(--line);border-radius:12px;
+    box-shadow:var(--shadow);font-size:13px;color:var(--muted);
+    padding:10px 14px;display:none;
+  }
+  .search-hint.show{display:block;}
+  .menu-toggle{
+    display:none;border:1px solid var(--line);background:#fff;
+    border-radius:10px;width:42px;height:38px;cursor:pointer;
+    align-items:center;justify-content:center;flex-direction:column;gap:4px;
+  }
+  .menu-toggle span{display:block;width:18px;height:2px;background:var(--blue-900);border-radius:2px;}
+
+  /* ===== 通用元素 ===== */
+  section{padding:64px 0;}
+  .section-head{margin-bottom:30px;}
+  .eyebrow{
+    display:inline-block;font-size:12.5px;letter-spacing:.16em;
+    color:var(--blue-500);font-weight:700;text-transform:uppercase;
+  }
+  h1,h2,h3{line-height:1.35;color:var(--blue-900);margin:0 0 12px;}
+  h2{font-size:clamp(22px,2.6vw,30px);letter-spacing:.01em;}
+  h3{font-size:17.5px;}
+  p{margin:0 0 12px;color:#374961;}
+  .lead{font-size:16.5px;color:#42566f;}
+  .muted{color:var(--muted);}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:11px 22px;border-radius:999px;font-size:14.5px;font-weight:600;
+    cursor:pointer;border:1px solid transparent;font-family:inherit;
+    transition:.22s;
+  }
+  .btn-primary{background:linear-gradient(135deg,var(--blue-500),#0a55c8);color:#fff;box-shadow:0 10px 24px rgba(31,111,235,.30);}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 30px rgba(31,111,235,.38);}
+  .btn-ghost{background:#fff;border-color:#c9dcf5;color:var(--blue-700);}
+  .btn-ghost:hover{background:var(--blue-050);}
+
+  /* ===== 首屏 ===== */
+  .hero{padding-top:52px;}
+  .hero-grid{
+    display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center;
+  }
+  .hero h1{
+    font-size:clamp(30px,4vw,48px);
+    line-height:1.2;letter-spacing:-.01em;margin-bottom:16px;
+  }
+  .hero h1 em{
+    font-style:normal;
+    background:linear-gradient(100deg,var(--blue-500),var(--cyan-glow));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero-desc{font-size:16px;color:#42566f;max-width:520px;}
+  .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px;}
+  .hero-stats{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:34px;
+  }
+  .stat{
+    background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:16px 18px;box-shadow:var(--shadow);
+  }
+  .stat b{
+    display:block;font-size:24px;color:var(--blue-700);letter-spacing:-.02em;
+  }
+  .stat span{font-size:12.5px;color:var(--muted);}
+  .hero-visual{
+    position:relative;border-radius:26px;overflow:hidden;
+    box-shadow:0 30px 60px rgba(11,28,58,.22);
+    aspect-ratio:4/3;
+    background:var(--blue-900);
+  }
+  .hero-visual img{width:100%;height:100%;object-fit:cover;}
+  .hero-badge{
+    position:absolute;left:16px;bottom:16px;
+    background:rgba(9,26,52,.72);backdrop-filter:blur(6px);
+    color:#eaf4ff;font-size:13px;padding:8px 14px;border-radius:999px;
+    border:1px solid rgba(110,180,255,.35);
+  }
+  .hero-float{
+    position:absolute;right:-14px;top:26px;background:#fff;
+    border-radius:14px;padding:12px 16px;box-shadow:var(--shadow);
+    font-size:12.5px;color:var(--muted);line-height:1.5;
+  }
+  .hero-float b{display:block;color:var(--blue-700);font-size:15px;}
+
+  /* ===== 焦点内容 ===== */
+  .focus-grid{
+    display:grid;grid-template-columns:1.25fr .75fr;gap:22px;
+  }
+  .video-card{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+    overflow:hidden;box-shadow:var(--shadow);transition:.25s;
+    display:flex;flex-direction:column;
+  }
+  .video-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover);}
+  .thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--blue-900);}
+  .thumb img{width:100%;height:100%;object-fit:cover;transition:.4s;}
+  .video-card:hover .thumb img{transform:scale(1.04);}
+  .thumb .tag{
+    position:absolute;left:12px;top:12px;background:rgba(9,26,52,.7);
+    color:#cfe8ff;font-size:12px;padding:3px 10px;border-radius:999px;
+    backdrop-filter:blur(4px);
+  }
+  .play{
+    position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;
+  }
+  .play i{
+    width:54px;height:54px;border-radius:50%;
+    background:rgba(255,255,255,.9);display:grid;place-items:center;
+    box-shadow:0 8px 24px rgba(0,0,0,.3);
+  }
+  .play i::after{
+    content:"";display:block;margin-left:4px;
+    border-left:16px solid var(--blue-700);
+    border-top:10px solid transparent;border-bottom:10px solid transparent;
+  }
+  .card-body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:8px;flex:1;}
+  .card-body h3{margin:0;font-size:16.5px;}
+  .card-body p{margin:0;font-size:13.5px;color:var(--muted);}
+  .card-meta{
+    display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--muted);
+    margin-top:auto;padding-top:8px;flex-wrap:wrap;
+  }
+  .avatar-sm{
+    width:26px;height:26px;border-radius:50%;flex:none;
+    display:grid;place-items:center;color:#fff;font-size:12px;font-weight:700;
+  }
+  .op-row{display:flex;gap:8px;margin-top:4px;}
+  .op{
+    border:1px solid var(--line);background:#fbfdff;border-radius:999px;
+    font-size:12.5px;padding:4px 12px;cursor:pointer;color:#42566f;
+    font-family:inherit;display:inline-flex;align-items:center;gap:5px;transition:.2s;
+  }
+  .op:hover{border-color:var(--blue-300);color:var(--blue-700);}
+  .op.liked{background:#e8f2ff;border-color:var(--blue-500);color:var(--blue-700);}
+  .op.saved{background:#fff1f2;border-color:#f9a8b8;color:#b4435c;}
+  .side-list{display:flex;flex-direction:column;gap:16px;}
+  .side-item{
+    display:grid;grid-template-columns:128px 1fr;gap:14px;background:#fff;
+    border:1px solid var(--line);border-radius:14px;overflow:hidden;
+    box-shadow:var(--shadow);transition:.2s;
+  }
+  .side-item:hover{transform:translateX(4px);box-shadow:var(--shadow-hover);}
+  .side-item .thumb{aspect-ratio:16/10;height:100%;}
+  .side-item .thumb .play i{width:36px;height:36px;}
+  .side-item .thumb .play i::after{border-left-width:11px;border-top-width:7px;border-bottom-width:7px;}
+  .side-item .si-body{padding:12px 14px 12px 0;display:flex;flex-direction:column;gap:4px;}
+  .side-item h3{font-size:14.5px;margin:0;}
+  .side-item p{font-size:12.5px;color:var(--muted);margin:0;}
+
+  /* ===== 专题 ===== */
+  .spec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .spec-card{
+    position:relative;border-radius:var(--radius);overflow:hidden;
+    border:1px solid var(--line);box-shadow:var(--shadow);
+    background:#fff;transition:.25s;
+  }
+  .spec-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover);}
+  .spec-card .thumb{aspect-ratio:16/10;}
+  .spec-card .spec-body{padding:16px 18px 18px;}
+  .spec-status{
+    display:inline-block;font-size:11.5px;padding:2px 10px;border-radius:999px;
+    background:#e8f7ee;color:#1c7a4a;font-weight:600;margin-bottom:6px;
+  }
+  .spec-status.ongoing{background:#fff4e2;color:#a56412;}
+  .spec-card h3{font-size:16px;margin-bottom:6px;}
+  .spec-card p{font-size:13px;color:var(--muted);margin:0;}
+
+  /* ===== 创作者 ===== */
+  .creator-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+  .creator{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+    padding:20px 18px;box-shadow:var(--shadow);transition:.25s;cursor:pointer;
+  }
+  .creator:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover);}
+  .avatar-lg{
+    width:58px;height:58px;border-radius:50%;display:grid;place-items:center;
+    color:#fff;font-size:22px;font-weight:800;margin-bottom:12px;
+  }
+  .creator h3{font-size:16px;margin-bottom:2px;}
+  .creator .role{font-size:12.5px;color:var(--blue-500);font-weight:600;margin-bottom:8px;}
+  .creator p{font-size:13px;color:var(--muted);margin:0 0 10px;}
+  .creator .nums{display:flex;gap:14px;font-size:12.5px;color:#54677f;border-top:1px dashed var(--line);padding-top:10px;}
+  .creator .nums b{color:var(--blue-700);}
+
+  /* ===== 故事 ===== */
+  .story-wrap{
+    display:grid;grid-template-columns:1fr 1fr;gap:22px;
+  }
+  .story{
+    background:#fff;border:1px solid var(--line);border-left:4px solid var(--blue-500);
+    border-radius:12px;padding:22px 24px;box-shadow:var(--shadow);
+  }
+  .story .st-date{font-size:12px;color:var(--blue-500);font-weight:700;letter-spacing:.06em;}
+  .story h3{font-size:17px;margin:8px 0 8px;}
+  .story p{font-size:14px;color:#42566f;margin:0;}
+
+  /* ===== 影像墙 ===== */
+  .wall{
+    display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:150px;gap:14px;
+  }
+  .wall figure{
+    margin:0;position:relative;border-radius:14px;overflow:hidden;
+    box-shadow:var(--shadow);background:var(--blue-900);
+  }
+  .wall figure img{width:100%;height:100%;object-fit:cover;transition:.4s;}
+  .wall figure:hover img{transform:scale(1.05);}
+  .wall figcaption{
+    position:absolute;left:0;right:0;bottom:0;padding:22px 12px 10px;
+    background:linear-gradient(180deg,transparent,rgba(6,20,40,.82));
+    color:#eaf4ff;font-size:12.5px;
+  }
+  .wall .big{grid-column:span 2;grid-row:span 2;}
+  .wall .tall{grid-row:span 2;}
+  .wall .wide{grid-column:span 2;}
+
+  /* ===== 评论 ===== */
+  .comment-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .comment{
+    background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:16px 18px;box-shadow:var(--shadow);display:flex;gap:12px;
+  }
+  .comment .avatar-sm{width:38px;height:38px;font-size:14px;}
+  .comment .c-body{font-size:13.5px;color:#374961;}
+  .comment .c-name{font-weight:700;color:var(--blue-900);font-size:13.5px;}
+  .comment .c-sub{font-size:12px;color:var(--muted);margin-bottom:4px;}
+
+  /* ===== 动态/日志 ===== */
+  .timeline{position:relative;padding-left:26px;}
+  .timeline::before{
+    content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;
+    background:linear-gradient(180deg,var(--blue-300),transparent);
+  }
+  .tl-item{position:relative;margin-bottom:20px;}
+  .tl-item::before{
+    content:"";position:absolute;left:-25px;top:7px;width:10px;height:10px;
+    border-radius:50%;background:var(--blue-500);box-shadow:0 0 0 4px #e3efff;
+  }
+  .tl-item .tl-date{font-size:12.5px;color:var(--blue-500);font-weight:700;}
+  .tl-item h3{font-size:15.5px;margin:2px 0 4px;}
+  .tl-item p{font-size:13.5px;color:var(--muted);margin:0;}
+
+  /* ===== FAQ ===== */
+  details{
+    background:#fff;border:1px solid var(--line);border-radius:12px;
+    padding:14px 18px;margin-bottom:12px;box-shadow:var(--shadow);
+  }
+  summary{
+    cursor:pointer;font-weight:600;color:var(--blue-900);font-size:15px;
+    list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;
+  }
+  summary::-webkit-details-marker{display:none;}
+  summary::after{content:"＋";color:var(--blue-500);font-size:18px;transition:.2s;}
+  details[open] summary::after{content:"－";}
+  details p{font-size:14px;color:#42566f;margin:10px 0 0;}
+
+  /* ===== 联系/投稿 ===== */
+  .contact-band{
+    background:linear-gradient(135deg,var(--blue-900),var(--blue-700) 60%,#1a5bb8);
+    color:#eaf4ff;border-radius:22px;padding:44px 40px;
+    box-shadow:0 24px 50px rgba(11,28,58,.26);
+    display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center;
+  }
+  .contact-band h2{color:#fff;margin-bottom:10px;}
+  .contact-band p{color:#c5dcf7;font-size:14.5px;}
+  .contact-band .btn-primary{box-shadow:0 12px 26px rgba(0,0,0,.28);}
+  .contact-info{display:flex;flex-direction:column;gap:10px;font-size:14px;color:#d5e8ff;}
+  .contact-info b{color:#fff;}
+
+  /* ===== 页脚 ===== */
+  footer.site{
+    background:#08152b;color:#a9c1dd;margin-top:40px;padding:50px 0 26px;
+  }
+  .foot-grid{
+    display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:28px;
+  }
+  footer.site h4{color:#fff;font-size:14.5px;margin:0 0 12px;}
+  footer.site a{font-size:13.5px;color:#a9c1dd;display:block;margin-bottom:8px;transition:.2s;}
+  footer.site a:hover{color:#6fc7ff;}
+  footer.site p{font-size:13.5px;color:#8fa8c6;}
+  .foot-bottom{
+    border-top:1px solid rgba(255,255,255,.1);margin-top:32px;padding-top:20px;
+    display:flex;flex-wrap:wrap;gap:10px 22px;justify-content:space-between;
+    font-size:12.5px;color:#7c96b5;
+  }
+
+  /* ===== 回到顶部 & Toast & 弹窗 ===== */
+  .to-top{
+    position:fixed;right:22px;bottom:26px;width:46px;height:46px;border-radius:50%;
+    border:0;background:var(--blue-500);color:#fff;font-size:18px;cursor:pointer;
+    box-shadow:0 12px 26px rgba(31,111,235,.4);opacity:0;pointer-events:none;
+    transition:.25s;z-index:150;
+  }
+  .to-top.show{opacity:1;pointer-events:auto;}
+  .toast{
+    position:fixed;left:50%;bottom:40px;transform:translate(-50%,20px);
+    background:#0b1c3a;color:#eaf4ff;padding:11px 22px;border-radius:999px;
+    font-size:13.5px;opacity:0;pointer-events:none;transition:.28s;z-index:200;
+    box-shadow:0 14px 30px rgba(0,0,0,.28);
+  }
+  .toast.show{opacity:1;transform:translate(-50%,0);}
+  .modal{
+    position:fixed;inset:0;background:rgba(6,18,38,.55);backdrop-filter:blur(3px);
+    display:none;place-items:center;z-index:300;padding:20px;
+  }
+  .modal.show{display:grid;}
+  .modal-card{
+    background:#fff;border-radius:18px;max-width:460px;width:100%;
+    padding:26px 26px 22px;box-shadow:0 30px 70px rgba(0,0,0,.35);
+    position:relative;animation:pop .25s ease;
+  }
+  @keyframes pop{from{transform:scale(.94);opacity:0;}to{transform:scale(1);opacity:1;}}
+  .modal-close{
+    position:absolute;right:14px;top:12px;border:0;background:transparent;
+    font-size:20px;cursor:pointer;color:var(--muted);
+  }
+  .modal-card h3{margin-bottom:8px;}
+  .modal-card p{font-size:14px;color:#42566f;}
+  .modal-card input,.modal-card textarea{
+    width:100%;border:1px solid var(--line);border-radius:10px;
+    padding:10px 12px;font-family:inherit;font-size:14px;margin-bottom:12px;
+    outline:0;background:#fbfdff;
+  }
+  .modal-card input:focus,.modal-card textarea:focus{border-color:var(--blue-300);}
+
+  /* ===== 响应式 ===== */
+  @media (max-width:1000px){
+    .hero-grid{grid-template-columns:1fr;gap:30px;}
+    .focus-grid{grid-template-columns:1fr;}
+    .spec-grid{grid-template-columns:1fr 1fr;}
+    .creator-grid{grid-template-columns:1fr 1fr;}
+    .story-wrap{grid-template-columns:1fr;}
+    .comment-grid{grid-template-columns:1fr;}
+    .foot-grid{grid-template-columns:1fr 1fr;}
+    .contact-band{grid-template-columns:1fr;padding:32px 26px;}
+    .wall{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:760px){
+    .menu-toggle{display:flex;}
+    nav.main{
+      display:none;position:absolute;left:0;right:0;top:100%;
+      background:#fff;border-bottom:1px solid var(--line);
+      padding:12px 4vw 18px;flex-direction:column;gap:2px;
+      box-shadow:0 18px 30px rgba(17,58,107,.12);
+    }
+    nav.main.open{display:flex;}
+    .nav-bar{position:relative;flex-wrap:wrap;gap:12px;}
+    .search-box{order:5;width:100%;margin-left:0;min-width:0;}
+    .spec-grid{grid-template-columns:1fr;}
+    .creator-grid{grid-template-columns:1fr;}
+    .hero-stats{grid-template-columns:1fr 1fr;}
+    .hero-float{display:none;}
+    .wall{grid-auto-rows:130px;}
+    .wall .big,.wall .wide{grid-column:span 2;}
+    .foot-grid{grid-template-columns:1fr;}
+    section{padding:46px 0;}
+  }
+</style>
+<script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</head>
+<body>
+
+<div class="sticky-shell">
+  <div class="announce">
+    <div class="wrap">
+      <span class="announce-tag">官方发布</span>
+      <div class="announce-track">
+        <span><b>新增</b>《蓝调城市·三十二夜》第七集已上线</span>
+        <span><b>企划</b>「一城一蓝」创作者招募开放报名，名额 60 位</span>
+        <span><b>更新</b>U蓝影像学院新增 4 节调色课程</span>
+        <span><b>动态</b>2024 年度蓝调影像大赏投票通道开启</span>
+        <span><b>新增</b>《蓝调城市·三十二夜》第七集已上线</span>
+        <span><b>企划</b>「一城一蓝」创作者招募开放报名，名额 60 位</span>
+        <span><b>更新</b>U蓝影像学院新增 4 节调色课程</span>
+        <span><b>动态</b>2024 年度蓝调影像大赏投票通道开启</span>
+      </div>
+    </div>
+  </div>
+
+  <header class="site">
+    <div class="wrap nav-bar">
+      <a class="logo" href="#top" aria-label="U蓝官方网站首页">
+        <span class="logo-mark">U</span>
+        <span>U蓝<small>BLUE MOTION</small></span>
+      </a>
+      <button class="menu-toggle" id="menuToggle" aria-label="展开导航" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="main" id="mainNav">
+        <a href="#top">首页</a>
+        <a href="#focus">焦点影像</a>
+        <a href="#special">专题企划</a>
+        <a href="#creators">创作者</a>
+        <a href="#wall">影像墙</a>
+        <a href="#news">企业动态</a>
+        <a href="#faq">帮助</a>
+        <a href="#contact">联系</a>
+      </nav>
+      <div class="search-box">
+        <input type="search" id="siteSearch" placeholder="搜索影像、专题、创作者" aria-label="站内搜索">
+        <button type="button" id="searchBtn">搜索</button>
+        <div class="search-hint" id="searchHint"></div>
+      </div>
+    </div>
+  </header>
+</div>
+
+<main id="top">
+
+  <!-- 首屏 -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">U蓝官方网站 · 蓝调影像品牌</span>
+        <h1>U蓝：<em>让每一帧蓝色都被认真对待</em></h1>
+        <p class="hero-desc">
+          作为深耕蓝调影像领域的企业，U蓝致力于为创作者与品牌搭建高品质、可持续的内容生态。
+          我们以蓝色为语言，记录城市夜色、海岸潮汐与人间呼吸之间的细微变化，
+          用专业影像与真实讲述，陪伴每一位热爱光影的人成长。
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#focus">浏览焦点影像</a>
+          <a class="btn btn-ghost" href="#special">查看专题企划</a>
+          <button class="btn btn-ghost" type="button" id="joinBtn">创作者投稿</button>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><b data-count="3200">0</b><span>原创影像作品</span></div>
+          <div class="stat"><b data-count="186">0</b><span>签约创作者(位)</span></div>
+          <div class="stat"><b data-count="42">0</b><span>深度专题企划</span></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Cdefs%3E%3ClinearGradient id='sky' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23071a33'/%3E%3Cstop offset='0.55' stop-color='%23123e73'/%3E%3Cstop offset='1' stop-color='%231f6feb'/%3E%3C/linearGradient%3E%3ClinearGradient id='sea' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23267ac9'/%3E%3Cstop offset='1' stop-color='%230b2444'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='600' fill='url(%23sky)'/%3E%3Ccircle cx='600' cy='150' r='58' fill='%23bfe4ff' opacity='0.85'/%3E%3Ccircle cx='600' cy='150' r='92' fill='%236fb3ff' opacity='0.16'/%3E%3Cpath d='M0 380 Q200 340 400 380 T800 360 V600 H0 Z' fill='url(%23sea)'/%3E%3Cpath d='M0 430 Q180 400 360 436 T800 420 V600 H0 Z' fill='%230a2140' opacity='0.85'/%3E%3Cg stroke='%23a9d6ff' stroke-width='2' opacity='0.5'%3E%3Cpath d='M80 470 q40 -14 80 0'/%3E%3Cpath d='M240 500 q40 -14 80 0'/%3E%3Cpath d='M430 462 q40 -14 80 0'/%3E%3Cpath d='M580 508 q40 -14 80 0'/%3E%3C/g%3E%3Cg fill='%23eaf4ff' opacity='0.8'%3E%3Ccircle cx='160' cy='120' r='2'/%3E%3Ccircle cx='300' cy='80' r='1.6'/%3E%3Ccircle cx='420' cy='180' r='1.8'/%3E%3Ccircle cx='700' cy='90' r='2'/%3E%3Ccircle cx='90' cy='220' r='1.5'/%3E%3C/g%3E%3C/svg%3E" alt="U蓝品牌主视觉：深蓝夜空与海面之上的月光倒影">
+        <div class="hero-badge">品牌形象片 ·《蓝的边界》</div>
+        <div class="hero-float"><b>本周热度</b>蓝调短片 128 部</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 焦点影像 -->
+  <section id="focus">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Focus · 焦点影像</span>
+        <h2>本周焦点：把蓝色拍成一种叙事</h2>
+        <p class="lead">由 U蓝官方编辑部与签约创作者共同挑选，聚焦真实、专业、有温度的影像作品。</p>
+      </div>
+
+      <div class="focus-grid">
+        <article class="video-card">
+          <div class="thumb">
+            <img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 450'%3E%3Cdefs%3E%3ClinearGradient id='n1' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%230d2a52'/%3E%3Cstop offset='1' stop-color='%232a7fe0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='450' fill='url(%23n1)'/%3E%3Cg fill='%23dceeff' opacity='0.9'%3E%3Crect x='90' y='210' width='70' height='160'/%3E%3Crect x='180' y='160' width='54' height='210'/%3E%3Crect x='250' y='240' width='84' height='130'/%3E%3Crect x='350' y='130' width='62' height='240'/%3E%3Crect x='430' y='200' width='90' height='170'/%3E%3Crect x='540' y='170' width='58' height='200'/%3E%3Crect x='620' y='225' width='96' height='145'/%3E%3C/g%3E%3Cg fill='%23bfe4ff' opacity='0.55'%3E%3Crect x='105' y='230' width='12' height='14'/%3E%3Crect x='135' y='260' width='12' height='14'/%3E%3Crect x='192' y='185' width='10' height='12'/%3E%3Crect x='365' y='155' width='10' height='12'/%3E%3Crect x='452' y='225' width='10' height='12'/%3E%3Crect x='640' y='248' width='12' height='12'/%3E%3C/g%3E%3Ccircle cx='690' cy='80' r='34' fill='%23eaf4ff' opacity='0.9'/%3E%3C/svg%3E" alt="焦点影像《夜航蓝皮书》封面：蓝调城市楼宇剪影与圆月">
+            <span class="tag">城市探索</span>
+            <div class="play"><i></i></div>
+          </div>
+          <div class="card-body">
+            <h3>《夜航蓝皮书》第一集：沿江十一公里的蓝</h3>
+            <p>从老码头到新桥，跟着摄影师的脚步，记录一座城市在夜里如何缓慢地变蓝。全片采用自然光与实景收音，保留胶片质感的微小颗粒。</p>
+            <div class="card-meta">
+              <span class="avatar-sm" style="background:linear-gradient(135deg,#1f6feb,#39d0ff)">林</span>
+              <span>林深影像</span>
+              <span>·</span>
+              <span>3.2 万次播放</span>
+            </div>
+            <div class="op-row">
+              <button class="op like-btn" type="button"><span>♡</span> 喜欢 <em>1286</em></button>
+              <button class="op save-btn" type="button"><span>☆</span> 收藏</button>
+              <button class="op share-btn" type="button">分享</button>
+            </div>
+          </div>
+        </article>
+
+        <div class="side-list">
+          <article class="side-item">
+            <div class="thumb">
+              <img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 200'%3E%3Crect width='320' height='200' fill='%23133a63'/%3E%3Ccircle cx='250' cy='52' r='26' fill='%23ffd89a'/%3E%3Cpath d='M0 140 L90 92 L160 132 L230 84 L320 128 V200 H0 Z' fill='%230a1e37'/%3E%3Cpath d='M0 160 L110 128 L190 158 L260 126 L320 152 V200 H0 Z' fill='%23071829'/%3E%3C/svg%3E" alt="海岸线蓝调影像封面：暖月与层叠山脊">
+              <div class="play"><i></i></div>
+            </div>
+            <div class="si-body">
+              <h3>海岸线的第三种蓝</h3>
+              <p>旅行见闻 · 8 分钟</p>
+            </div>
+          </article>
+          <article class="side-item">
+            <div class="thumb">
+              <img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 200'%3E%3Crect width='320' height='200' fill='%23eaf2ff'/%3E%3Crect x='34' y='46' width='110' height='120' rx='8' fill='%231f6feb' opacity='0.85'/%3E%3Crect x='164' y='70' width='122' height='96' rx='8' fill='%236fb3ff' opacity='0.75'/%3E%3Ccircle cx='90' cy='92' r='16' fill='%23ffffff' opacity='0.9'/%3E%3C/svg%3E" alt="调色教程封面：蓝白色块与圆形构成">
+              <div class="play"><i></i></div>
+            </div>
+            <div class="si-body">
+              <h3>冷调调色实战：从灰蓝到清透蓝</h3>
+              <p>教程干货 · 14 分钟</p>
+            </div>
+          </article>
+          <article class="side-item">
+            <div class="thumb">
+              <img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 200'%3E%3Crect width='320' height='200' fill='%23101e36'/%3E%3Cg stroke='%2339d0ff' stroke-width='3' fill='none' opacity='0.85'%3E%3Cpath d='M20 170 L70 110 L120 140 L180 70 L240 120 L300 60'/%3E%3C/g%3E%3Cg fill='%2339d0ff'%3E%3Ccircle cx='70' cy='110' r='5'/%3E%3Ccircle cx='180' cy='70' r='5'/%3E%3Ccircle cx='300' cy='60' r='5'/%3E%3C/g%3E%3C/svg%3E" alt="行业观察封面：折线数据与荧光点">
+              <div class="play"><i></i></div>
+            </div>
+            <div class="si-body">
+              <h3>影像行业的蓝色经济学</h3>
+              <p>行业观察 · 11 分钟</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 专题企划 -->
+  <section id="special" style="background:linear-gradient(180deg,#eef5ff,#f8fbff);">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Special · 专题企划</span>
+        <h2>持续运营的深度企划，记录蓝色的多种可能</h2>
+        <p class="lead">每一个专题都由官方编辑部策划、创作者共创，呈现垂直领域里的真实观察与原创表达。</p>
+      </div>
+      <div class="spec-grid">
+        <article class="spec-card">
+          <div class="thumb">
+            <img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 400'%3E%3Crect width='640' height='400' fill='%230b2444'/%3E%3Cg fill='%236fb3ff' opacity='0.9'%3E%3Crect x='60' y='150' width='60' height='190'/%3E%3Crect x='140' y='110' width='48' height='230'/%3E%3Crect x='206' y='180' width='74' height='160'/%3E%3Crect x='300' y='96' width='56' height='244'/%3E%3Crect x='376' y='166' width='82' height='174'/%3E%3Crect x='478' y='130' width='50' height='210'/%3E%3Crect x='548' y='190' width='60' height='150'/%3E%3C/g%3E%3Ccircle cx='540' cy='70' r='30' fill='%23eaf4ff'/%3E%3C/svg%3E" alt="专题《一城一蓝》封面：蓝调城市天际线">
+            <span class="tag">专题</span>
+          </div>
+          <div class="spec-body">
+            <span class="spec-status ongoing">更新中 · 第 7 期</span>
+            <h3>一城一蓝</h3>
+            <p>走访十二座城市，用统一的蓝色电影语言记录不同地域的夜色与人文，邀请本地创作者共同参与拍摄。</p>
+          </div>
+        </article>
+        <article class="spec-card">
+          <div class="thumb">
+            <img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 400'%3E%3Crect width='640' height='400' fill='%23dcecff'/%3E%3Cg stroke='%231f6feb' stroke-width='4' fill='none'%3E%3Crect x='70' y='70' width='210' height='140' rx='10'/%3E%3Crect x='330' y='120' width='240' height='150' rx='10'/%3E%3C/g%3E%3Cg fill='%23133a63'%3E%3Crect x='96' y='100' width='120' height='10' rx='5'/%3E%3Crect x='96' y='126' width='90' height='10' rx='5'/%3E%3Crect x='358' y='154' width='150' height='10' rx='5'/%3E%3Crect x='358' y='182' width='110' height='10' rx='5'/%3E%3C/g%3E%3Ccircle cx='520' cy='80' r='24' fill='%2339d0ff' opacity='0.8'/%3E%3C/svg%3E" alt="专题《蓝的十种做法》封面：分镜画框与文字块">
+            <span class="tag">专题</span>
+          </div>
+          <div class="spec-body">
+            <span class="spec-status">已完结 · 共 10 期</span>
+            <h3>蓝的十种做法</h3>
+            <p>十位创作者，用十种截然不同的方式理解蓝色：从调色台到海边的黄昏，从布料染缸到城市霓虹。</p>
+          </div>
+        </article>
+        <article class="spec-card">
+          <div class="thumb">
+            <img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 400'%3E%3Crect width='640' height='400' fill='%230f2b4f'/%3E%3Cg fill='%23bfe4ff'%3E%3Ccircle cx='140' cy='140' r='8'/%3E%3Ccircle cx='240' cy='210' r='6'/%3E%3Ccircle cx='360' cy='110' r='9'/%3E%3Ccircle cx='470' cy='240' r='7'/%3E%3Ccircle cx='540' cy='150' r='6'/%3E%3C/g%3E%3Cg stroke='%2339d0ff' stroke-width='2' opacity='0.6'%3E%3Cpath d='M140 140 L240 210 L360 110 L470 240 L540 150'/%3E%3C/g%3E%3Cpath d='M0 320 Q160 280 320 320 T640 300 V400 H0 Z' fill='%23081c33'/%3E%3C/svg%3E" alt="专题《夜班观察》封面：星点网络与低垂地平线">
+            <span class="tag">专题</span>
+          </div>
+          <div class="spec-body">
+            <span class="spec-status ongoing">征集中 · 12 位讲述者</span>
+            <h3>夜班观察</h3>
+            <p>镜头对准那些在深夜里工作的人：调音师、急诊护士、深夜书店主理人，记录他们的蓝色时刻。</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 创作者矩阵 -->
+  <section id="creators">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Creators · 创作者矩阵</span>
+        <h2>与值得信赖的创作者同行</h2>
+        <p class="lead">U蓝社区汇聚多元背景的影像作者，他们以匠心打磨每一帧，构成了平台的内容底座。</p>
+      </div>
+      <div class="creator-grid">
+        <article class="creator creator-card" tabindex="0" data-name="林深影像" data-bio="自由摄影师与纪录片导演，擅长用自然光表现城市与人的关系。连续三年参与「一城一蓝」专题，作品以克制的蓝调与长时间凝视著称。">
+          <div class="avatar-lg" style="background:linear-gradient(135deg,#1f6feb,#39d0ff)">林</div>
+          <h3>林深影像</h3>
+          <div class="role">城市纪录 / 蓝调摄影</div>
+          <p>在城市里走夜路的人，用镜头记录被灯光重新定义的街道。</p>
+          <div class="nums"><span>作品 <b>186</b></span><span>关注 <b>4.2 万</b></span></div>
+        </article>
+        <article class="creator creator-card" tabindex="0" data-name="海岸线工作室" data-bio="由两位海洋学背景的影像爱好者创立，专注海岸生态与潮汐影像，作品多次被自然影像展收录。主张用影像传递社会责任。">
+          <div class="avatar-lg" style="background:linear-gradient(135deg,#0a55c8,#6fb3ff)">海</div>
+          <h3>海岸线工作室</h3>
+          <div class="role">自然影像 / 生态纪录</div>
+          <p>把潮水的声音收进片子，也把海岸线的变化记录下来。</p>
+          <div class="nums"><span>作品 <b>97</b></span><span>关注 <b>3.6 万</b></span></div>
+        </article>
+        <article class="creator creator-card" tabindex="0" data-name="阿蓝的暗房" data-bio="胶片摄影爱好者与洗片师，运营暗房教程系列。用化学与光影解释蓝色为何有无数种层次，擅长把技术讲得温柔。">
+          <div class="avatar-lg" style="background:linear-gradient(135deg,#123a6b,#39d0ff)">蓝</div>
+          <h3>阿蓝的暗房</h3>
+          <div class="role">胶片 / 洗印技艺</div>
+          <p>在暗房红灯下，等一张照片慢慢显出蓝色。</p>
+          <div class="nums"><span>作品 <b>142</b></span><span>关注 <b>2.8 万</b></span></div>
+        </article>
+        <article class="creator creator-card" tabindex="0" data-name="夜航剪辑室" data-bio="专注剪辑与节奏研究的创作者，擅长把长镜头剪出呼吸感。开设剪辑思路公开课，主张技术为故事服务，是社区口碑极高的一位。">
+          <div class="avatar-lg" style="background:linear-gradient(135deg,#1f6feb,#0b1c3a)">夜</div>
+          <h3>夜航剪辑室</h3>
+          <div class="role">剪辑 / 后期节奏</div>
+          <p>剪辑不是隐藏切点，而是让观众忘记它的存在。</p>
+          <div class="nums"><span>作品 <b>208</b></span><span>关注 <b>5.1 万</b></span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 故事随笔 -->
+  <section id="stories" style="background:linear-gradient(180deg,#f8fbff,#edf4ff);">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Stories · 影像随笔</span>
+        <h2>镜头之后，还有一些没剪进去的话</h2>
+        <p class="lead">来自创作者与编辑部的真实记录，回应社区里每一次被认真观看的影像。</p>
+      </div>
+      <div class="story-wrap">
+        <article class="story">
+          <div class="st-date">2024 · 06 · 18</div>
+          <h3>为了一个午后，我们等了四十分钟</h3>
+          <p>拍摄《夜航蓝皮书》第三集时，我们想在桥上等一段刚刚好的蓝。云层一直不散，摄影师把三脚架搬到桥栏边挡风，最后那四分钟的蓝大约只存在了九十秒，但每个人都记住了它。</p>
+        </article>
+        <article class="story">
+          <div class="st-date">2024 · 07 · 02</div>
+          <h3>关于投稿，我们想说的三件小事</h3>
+          <p>第一，请把片头压缩到十秒以内；第二，字幕尽量完整；第三，我们更在意你想讲什么，而不是用了什么机器。U蓝的编辑会认真看完每一部投稿，并给出具体反馈，这也是平台值得信赖的原因之一。</p>
+        </article>
+        <article class="story">
+          <div class="st-date">2024 · 07 · 25</div>
+          <h3>从观众到创作者，只需要一次上传</h3>
+          <p>社区里不少作者的第一部作品是手机拍摄的三分钟短片。我们为新人准备了投稿攻略与剪辑思路建议，也保留了比赛与挑战活动，让创意有被看见的机会。</p>
+        </article>
+        <article class="story">
+          <div class="st-date">2024 · 08 · 09</div>
+          <h3>蓝色的技术笔记：为什么冷调很难</h3>
+          <p>冷调容易显得脏，因为它把肤色和阴影的差异放大了。我们在实战教学中整理了三个原则：先保亮度、再控饱和、最后找记忆色。这些经验都来自社区作者的真实项目。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 影像墙 -->
+  <section id="wall">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Gallery · 影像墙</span>
+        <h2>社区作品墙：来自同好的蓝色片段</h2>
+        <p class="lead">尺寸各异，情绪各异。每一张封面都对应一段被认真拍摄的视频内容。</p>
+      </div>
+      <div class="wall">
+        <figure class="big">
+          <img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 600'%3E%3Crect width='600' height='600' fill='%230c2544'/%3E%3Ccircle cx='420' cy='160' r='70' fill='%23dceeff' opacity='0.9'/%3E%3Cpath d='M0 430 Q150 380 300 430 T600 410 V600 H0 Z' fill='%231f6feb' opacity='0.8'/%3E%3Cpath d='M0 480 Q160 440 320 486 T600 466 V600 H0 Z' fill='%230a1e37'/%3E%3Cg stroke='%23a9d6ff' stroke-width='2' opacity='0.45'%3E%3Cpath d='M60 510 q36 -12 72 0'/%3E%3Cpath d='M220 540 q36 -12 72 0'/%3E%3Cpath d='M400 500 q36 -12 72 0'/%3E%3C/g%3E%3C/svg%3E" alt="作品墙大图：夜色海面上的月亮与波纹">
+          <figcaption>《月落之前》 · 林深影像</figcaption>
+        </figure>
+        <figure>
+          <img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23e6f1ff'/%3E%3Crect x='40' y='60' width='90' height='180' rx='6' fill='%231f6feb' opacity='0.85'/%3E%3Crect x='160' y='96' width='100' height='144' rx='6' fill='%236fb3ff'/%3E%3Ccircle cx='86' cy='110' r='14' fill='%23ffffff'/%3E%3C/svg%3E" alt="作品墙图：蓝白色块构成的城市立面">
+          <figcaption>《立面练习》 · 夜航剪辑室</figcaption>
+        </figure>
+        <figure class="tall">
+          <img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 600'%3E%3Crect width='300' height='600' fill='%23112f56'/%3E%3Cg stroke='%2339d0ff' stroke-width='3' fill='none' opacity='0.8'%3E%3Cpath d='M150 40 V560'/%3E%3Cpath d='M150 120 L210 200 L150 280 L90 360 L150 440'/%3E%3C/g%3E%3Ccircle cx='150' cy='80' r='14' fill='%23eaf4ff'/%3E%3C/svg%3E" alt="作品墙竖图：蓝色数据线与折线路径">
+          <figcaption>《一条线的旅行》 · 海岸线工作室</figcaption>
+        </figure>
+        <figure class="wide">
+          <img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 300'%3E%3Crect width='600' height='300' fill='%23f2f8ff'/%3E%3Cg fill='%23133a63' opacity='0.9'%3E%3Crect x='50' y='150' width='46' height='110'/%3E%3Crect x='112' y='110' width='38' height='150'/%3E%3Crect x='166' y='170' width='52' height='90'/%3E%3Crect x='234' y='96' width='44' height='164'/%3E%3Crect x='294' y='140' width='58' height='120'/%3E%3Crect x='368' y='120' width='40' height='140'/%3E%3Crect x='424' y='176' width='56' height='84'/%3E%3Crect x='496' y='136' width='42' height='124'/%3E%3C/g%3E%3Ccircle cx='530' cy='60' r='24' fill='%23ffd89a'/%3E%3C/svg%3E" alt="作品墙宽图：浅色背景下的城市剪影与暖月">
+          <figcaption>《白天的蓝色》 · 阿蓝的暗房</figcaption>
+        </figure>
+        <figure>
+          <img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23071a33'/%3E%3Cpath d='M0 220 Q80 180 150 220 T300 200 V300 H0 Z' fill='%231f6feb' opacity='0.7'/%3E%3Ccircle cx='220' cy='90' r='30' fill='%236fb3ff' opacity='0.9'/%3E%3C/svg%3E" alt="作品墙图：深蓝夜幕下的低平海岸">
+          <figcaption>《退潮之后》 · 海岸线工作室</figcaption>
+        </figure>
+        <figure>
+          <img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23dbeafe'/%3E%3Ccircle cx='150' cy='150' r='80' fill='none' stroke='%231f6feb' stroke-width='10'/%3E%3Ccircle cx='150' cy='150' r='42' fill='%2339d0ff' opacity='0.8'/%3E%3C/svg%3E" alt="作品墙图：蓝调同心圆抽象构图">
+          <figcaption>《同心》 · 夜航剪辑室</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 用户评价 -->
+  <section id="reviews" style="background:linear-gradient(180deg,#eef5ff,#f8fbff);">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Voices · 社区口碑</span>
+        <h2>他们这样描述在 U蓝的体验</h2>
+      </div>
+      <div class="comment-grid">
+        <div class="comment">
+          <span class="avatar-sm" style="background:linear-gradient(135deg,#1f6feb,#6fb3ff)">沈</span>
+          <div class="c-body">
+            <div class="c-name">沈舟</div>
+            <div class="c-sub">摄影爱好者 · 关注 8 个月</div>
+            <div>调色教程讲得很实在，不是那种只展示结果不讲过程的。跟着做了三遍，终于知道冷调为什么会显脏。</div>
+          </div>
+        </div>
+        <div class="comment">
+          <span class="avatar-sm" style="background:linear-gradient(135deg,#123a6b,#39d0ff)">许</span>
+          <div class="c-body">
+            <div class="c-name">许一诺</div>
+            <div class="c-sub">大学生 · 投稿 2 次</div>
+            <div>第一次投稿就被编辑认真回复了，写了七八百字的意见，比我自己复盘得还细。</div>
+          </div>
+        </div>
+        <div class="comment">
+          <span class="avatar-sm" style="background:linear-gradient(135deg,#0a55c8,#0b1c3a)">周</span>
+          <div class="c-body">
+            <div class="c-name">周林</div>
+            <div class="c-sub">广告从业者</div>
+            <div>专题做的很讲究，一期能看半小时。特别喜欢城市系列，不吵，节奏舒服。</div>
+          </div>
+        </div>
+        <div class="comment">
+          <span class="avatar-sm" style="background:linear-gradient(135deg,#1f6feb,#39d0ff)">顾</span>
+          <div class="c-body">
+            <div class="c-name">顾清和</div>
+            <div class="c-sub">独立导演</div>
+            <div>作为创作者，我更看重平台是否尊重片子本身。这里不会为了流量硬改标题，这点很难得。</div>
+          </div>
+        </div>
+        <div class="comment">
+          <span class="avatar-sm" style="background:linear-gradient(135deg,#6fb3ff,#123a6b)">momo</span>
+          <div class="c-body">
+            <div class="c-name">莫莫</div>
+            <div class="c-sub">新用户 · 关注 2 周</div>
+            <div>搜索挺方便，想找夜拍的教程，一下就翻到合集了。希望以后能按城市筛选。</div>
+          </div>
+        </div>
+        <div class="comment">
+          <span class="avatar-sm" style="background:linear-gradient(135deg,#0b1c3a,#1f6feb)">陈</span>
+          <div class="c-body">
+            <div class="c-name">陈原</div>
+            <div class="c-sub">摄影社群组织者</div>
+            <div>带社群参加过两次投稿挑战，活动规则清楚，评审也公开，适合新人练手。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 企业动态 -->
+  <section id="news">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">News · 企业动态</span>
+        <h2>官方发布与内容更新日志</h2>
+        <p class="lead">U蓝坚持透明、持续地公布内容计划与社区规则，让每一次参与都有据可依。</p>
+      </div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-date">2024 年 8 月 12 日</div>
+          <h3>「一城一蓝」第二季创作者招募启动</h3>
+          <p>面向所有影像爱好者开放报名，预计入选 60 位创作者，入选者可获得拍摄设备支持与后期指导。</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">2024 年 7 月 30 日</div>
+          <h3>U蓝影像学院课程更新</h3>
+          <p>新增《夜拍曝光控制》《调色台里的蓝色逻辑》等四节课，均由社区口碑创作者主讲。</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">2024 年 7 月 12 日</div>
+          <h3>年度蓝调影像大赏投票开启</h3>
+          <p>共 42 部作品入围，投票周期三周。评审由编辑部与外部导演共同组成，结果将公开公示。</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">2024 年 6 月 28 日</div>
+          <h3>社区投稿规范更新</h3>
+          <p>明确原创声明与素材授权要求，新增快速反馈通道，投稿处理周期缩短至五个工作日。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" style="background:linear-gradient(180deg,#f8fbff,#edf4ff);">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Help · 常见问题</span>
+        <h2>关于投稿、版权与合作的常见疑问</h2>
+      </div>
+      <details open>
+        <summary>如何向 U蓝投稿自己的影像作品？</summary>
+        <p>点击页面中的「创作者投稿」按钮填写基本信息，并附上作品文件的可访问链接。编辑部会在五个工作日内回复，未通过的作品也会收到具体的修改建议。</p>
+      </details>
+      <details>
+        <summary>投稿作品需要独家授权吗？</summary>
+        <p>不需要独家。我们尊重创作者的多元发布需求，仅需确保作品为原创、拥有完整版权，并同意 U蓝在官方渠道进行展示与推荐。</p>
+      </details>
+      <details>
+        <summary>平台对视频画质有要求吗？</summary>
+        <p>建议分辨率 1080p 及以上，帧率不低于 25fps，音频无明显底噪。手机拍摄作品同样欢迎，我们更关注叙事与真实表达。</p>
+      </details>
+      <details>
+        <summary>如何参加「一城一蓝」企划？</summary>
+        <p>在活动页面报名后，需提交一份 300 字以内的拍摄计划与两张参考画面。入选后我们会提供拍摄支持，并在成片阶段安排一对一沟通。</p>
+      </details>
+      <details>
+        <summary>社区对评论区有哪些规范？</summary>
+        <p>我们鼓励具体、友善的讨论。涉及人身攻击、侵权素材或虚假信息的评论会被处理，情节严重的账号将限制互动权限。</p>
+      </details>
+      <details>
+        <summary>品牌或机构如何与 U蓝合作？</summary>
+        <p>可通过页面底部联系方式发送合作需求，注明合作类型、周期与预期目标。我们会在三个工作日内安排对接。</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- 联系 -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact-band">
+        <div>
+          <h2>与 U蓝一起，把下一种蓝拍出来</h2>
+          <p>无论你是创作者、品牌方，还是只想分享一段夜色的普通观众，我们都乐于听见你的声音。U蓝官方网站持续更新投稿入口、活动报名与合作信息，期待与你共同成长。</p>
+          <div class="hero-actions" style="margin-top:22px;">
+            <button class="btn btn-primary" type="button" id="joinBtn2">立即投稿</button>
+            <button class="btn btn-ghost" type="button" id="shareSiteBtn" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.35);color:#fff;">分享官网</button>
+          </div>
+        </div>
+        <div class="contact-info">
+          <span><b>品牌合作：</b>partner@ublue-brand.cn</span>
+          <span><b>投稿咨询：</b>create@ublue-brand.cn</span>
+          <span><b>媒体联络：</b>press@ublue-brand.cn</span>
+          <span><b>运营时间：</b>周一至周五 10:00 - 19:00</span>
+          <span><b>办公地址：</b>滨江创意园 7 号楼 3 层</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="logo" href="#top" style="color:#fff;margin-bottom:14px;">
+          <span class="logo-mark">U</span>
+          <span>U蓝<small style="color:#8fa8c6;">BLUE MOTION</small></span>
+        </a>
+        <p>U蓝官方网站 · 专注蓝调影像与城市记录的垂直领域内容平台。我们以原创、正版、高清为标准，持续运营社区与专题企划，陪伴创作者与观众一同成长。</p>
+      </div>
+      <div>
+        <h4>内容</h4>
+        <a href="#focus">焦点影像</a>
+        <a href="#special">专题企划</a>
+        <a href="#wall">社区影像墙</a>
+        <a href="#stories">影像随笔</a>
+      </div>
+      <div>
+        <h4>参与</h4>
+        <a href="#creators">创作者矩阵</a>
+        <a href="#news">企业动态</a>
+        <a href="#faq">投稿指南</a>
+        <a href="#contact">合作联系</a>
+      </div>
+      <div>
+        <h4>关于</h4>
+        <a href="#top">品牌故事</a>
+        <a href="#reviews">社区口碑</a>
+        <a href="#faq">帮助中心</a>
+        <a href="#contact">官方发布</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2024 U蓝官方网站 · 版权所有 · 持续运营中</span>
+      <span>备案号：沪 ICP 备 XXXXXXXXX 号（占位）</span>
+      <span>本页内容均为品牌展示用途，图片为页面内生成图形</span>
+    </div>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-card">
+    <button class="modal-close" id="modalClose" aria-label="关闭">×</button>
+    <h3 id="modalTitle">创作者投稿</h3>
+    <p id="modalDesc">填写联系方式与作品简介，U蓝编辑部将在五个工作日内回复。</p>
+    <input type="text" id="mName" placeholder="你的称呼或创作者昵称">
+    <input type="email" id="mMail" placeholder="联系邮箱">
+    <textarea id="mNote" rows="3" placeholder="作品简介 / 你想讲的故事"></textarea>
+    <button class="btn btn-primary" type="button" id="modalSubmit" style="width:100%;justify-content:center;">提交</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var toast = document.getElementById('toast');
+  var toastTimer;
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 2200);
+  }
+
+  // 移动端导航
+  var toggle = document.getElementById('menuToggle');
+  var nav = document.getElementById('mainNav');
+  toggle.addEventListener('click', function(){
+    var open = nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  nav.addEventListener('click', function(e){
+    if(e.target.tagName === 'A'){ nav.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); }
+  });
+
+  // 搜索反馈
+  var input = document.getElementById('siteSearch');
+  var hint = document.getElementById('searchHint');
+  var btn = document.getElementById('searchBtn');
+  var keys = ['夜航蓝皮书','一城一蓝','调色教程','海岸线','夜班观察','暗房','剪辑思路','城市探索','创作者投稿','蓝调影像大赏'];
+  function doSearch(){
+    var v = (input.value || '').trim();
+    if(!v){ hint.textContent = '试试搜索：城市夜色、调色、海岸线、创作者'; hint.classList.add('show'); return; }
+    var hit = keys.filter(function(k){ return k.indexOf(v) > -1 || v.indexOf(k) > -1; });
+    if(hit.length){
+      hint.textContent = '找到 ' + hit.length + ' 个相关结果：' + hit.slice(0,4).join('、');
+    }else{
+      hint.textContent = '暂未找到「' + v + '」的相关内容，可查看专题企划或联系编辑部。';
+    }
+    hint.classList.add('show');
+  }
+  btn.addEventListener('click', doSearch);
+  input.addEventListener('keydown', function(e){ if(e.key === 'Enter'){ doSearch(); } });
+  input.addEventListener('input', function(){ if(!input.value){ hint.classList.remove('show'); } });
+
+  // 点赞 / 收藏
+  document.querySelectorAll('.like-btn').forEach(function(b){
+    b.addEventListener('click', function(){
+      var em = b.querySelector('em');
+      var num = parseInt(em.textContent, 10) || 0;
+      if(b.classList.toggle('liked')){
+        em.textContent = num + 1;
+        b.querySelector('span').textContent = '♥';
+        showToast('已喜欢这部作品');
+      }else{
+        em.textContent = num - 1;
+        b.querySelector('span').textContent = '♡';
+        showToast('已取消喜欢');
+      }
+    });
+  });
+  document.querySelectorAll('.save-btn').forEach(function(b){
+    b.addEventListener('click', function(){
+      if(b.classList.toggle('saved')){
+        b.querySelector('span').textContent = '★';
+        showToast('已收藏到你的片单');
+      }else{
+        b.querySelector('span').textContent = '☆';
+        showToast('已取消收藏');
+      }
+    });
+  });
+
+  // 分享
+  function shareText(){
+    var url = 'https://ublue-brand.example.cn/';
+    return url;
+  }
+  document.querySelectorAll('.share-btn, #shareSiteBtn').forEach(function(b){
+    b.addEventListener('click', function(){
+      var text = 'U蓝官方网站｜蓝调影像品牌｜' + shareText();
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(function(){
+          showToast('链接已复制，可分享给同好');
+        }).catch(function(){
+          showToast('复制失败，请手动分享');
+        });
+      }else{
+        showToast('可分享至微信 / 微博 / QQ');
+      }
+    });
+  });
+
+  // 创作者弹窗
+  var modal = document.getElementById('modal');
+  var mTitle = document.getElementById('modalTitle');
+  var mDesc = document.getElementById('modalDesc');
+  var mName = document.getElementById('mName');
+  var mMail = document.getElementById('mMail');
+  var mNote = document.getElementById('mNote');
+  function openModal(title, desc){
+    mTitle.textContent = title;
+    mDesc.textContent = desc;
+    mName.value = ''; mMail.value = ''; mNote.value = '';
+    modal.classList.add('show');
+  }
+  function closeModal(){ modal.classList.remove('show'); }
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e){ if(e.target === modal){ closeModal(); } });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ closeModal(); } });
+
+  document.querySelectorAll('.creator-card').forEach(function(c){
+    c.addEventListener('click', function(){
+      openModal(c.dataset.name + ' · 创作者档案', c.dataset.bio);
+    });
+  });
+
+  var joinBtn = document.getElementById('joinBtn');
+  var joinBtn2 = document.getElementById('joinBtn2');
+  [joinBtn, joinBtn2].forEach(function(b){
+    if(b){ b.addEventListener('click', function(){
+      openModal('创作者投稿', '填写联系方式与作品简介，U蓝编辑部将在五个工作日内回复。');
+    }); }
+  });
+
+  document.getElementById('modalSubmit').addEventListener('click', function(){
+    var n = (mName.value || '').trim();
+    if(!n){ showToast('请填写称呼'); mName.focus(); return; }
+    closeModal();
+    showToast('投稿信息已收到，我们会尽快联系你');
+  });
+
+  // 数字滚动
+  var counters = document.querySelectorAll('[data-count]');
+  var cObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(!en.isIntersecting) return;
+      var el = en.target;
+      var target = parseInt(el.dataset.count, 10) || 0;
+      var start = 0, dur = 1200, t0 = null;
+      function step(ts){
+        if(!t0) t0 = ts;
+        var p = Math.min((ts - t0) / dur, 1);
+        el.textContent = Math.round(start + (target - start) * p).toLocaleString('zh-CN');
+        if(p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+      cObserver.unobserve(el);
+    });
+  }, { threshold: .4 });
+  counters.forEach(function(c){ cObserver.observe(c); });
+
+  // 回到顶部
+  var toTop = document.getElementById('toTop');
+  window.addEventListener('scroll', function(){
+    if(window.scrollY > 500){ toTop.classList.add('show'); } else { toTop.classList.remove('show'); }
+  });
+  toTop.addEventListener('click', function(){ window.scrollTo({ top:0, behavior:'smooth' }); });
+})();
+</script>
+</body>
+  </html>
